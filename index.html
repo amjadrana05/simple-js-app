@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <style>
+    .live-edit{
+      background: #333;
+      color: #fff;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="app"></div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-4">
+        <h3>Add New Post</h3>
+        <div class="app">
+          <div class="post-insert">
+            <form>
+              <div class=" mb-3">
+                <input type="text" id="post_name" class="form-control" placeholder="Post Name">
+              </div>
+              <div class=" mb-3">
+                <textarea id="post_text" cols="30" rows="8" class="form-control" placeholder="Insert text"></textarea>
+              </div>
+              <!-- <div class=" mb-3">
+                  <button class="btn-sm btn btn-primary">BG Color</button>
+                  <button class="btn-sm btn btn-primary">Font family</button>
+                  <button class="btn-sm btn btn-primary">Font size</button>
+                </div> -->
+              <div>
+                <button class="btn btn-default add-post">Post Now</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-sm-5">
+        <h3>Live Edit</h3>
+        <div class="app-view">
+          <div class="live-edit">
+          </div>
+          <ul class="all-posts"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./dist/bundle.js"></script>
+</body>
+</html>
