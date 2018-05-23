@@ -1,3 +1,6 @@
+//Import css
+import './style.css'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 //Helper Function
 function setAttributes(el, attrs) {
