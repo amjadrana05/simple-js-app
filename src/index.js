@@ -1,54 +1,135 @@
-(function () {
-  let $ = document,
-    app = $.getElementById("app"),
-    appView  = $.querySelector('.app-view .all-posts'),
-    newPost  = '',
-    postName = '',
-    postText = '',
-    months   = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-    currentDate = `${new Date().getDate()}th/ ${months[new Date().getMonth()]}/ ${new Date().getFullYear()} ${new Date().getHours()}: ${new Date().getMinutes()}`;
-  
-  // Main Structure
-  {
 
+//Helper Function
+function setAttributes(el, attrs) {
+  for(let prop in attrs){
+    el.setAttribute(prop, attrs[prop]);
+  }
+}
+function appendChilds(el, childs){
+  for(let i=0; i<childs.length; i++){
+    el.appendChild(childs[i]);
+  }
+}
+
+// dom manupulation
+const $ = document;
+const app = $.getElementById("app");
+
+(function(){  
+  const postInsert = $.createElement('div');
+  const titleField = $.createElement('input');
+  const contentField = $.createElement('textarea');
+  const postButton = $.createElement('button');
+  const viewPosts = $.createElement('div');
+  const allPosts = $.createElement('ul');
+
+  // init post area
+  postArea();
+
+  // init all posts
+  postList();
+  
+  // Post Area
+  function postArea(){
+    const postHeading = $.createElement('h4');
+    postHeading.innerHTML = "Insert New Post";
+    postHeading.setAttribute("class", "newpost-header");
+    postInsert.prepend(postHeading);
+    postInsert.classList.add('post-insert');
+    
+    setAttributes(titleField, {
+      "type": "text",
+      "placeholder": "Post Title",
+      "class": "form-control mb-3",
+      "id": "post_name"
+    });
+    setAttributes(contentField, {
+      "type": "textarea",
+      "placeholder": "Enter Post Content",
+      "class": "form-control mb-3",
+      "id": "post_text"
+    });
+    setAttributes(postButton, {
+      "type": "submit",
+      "class": "btn btn-default add-post"
+    });
+    postButton.innerHTML = "Post Now";
+    app.appendChild(postInsert);
+    appendChilds(postInsert, [
+      titleField,
+      contentField,
+      postButton
+    ]);
   }
 
-  $.querySelector('.add-post').addEventListener('click', function (e) {
-    e.preventDefault();
+  //Live Edit Post
+  function liveEdit(){
+    const liveEdit = $.createElement('div');
+    const viewPostsWrap = $.querySelector('.view-posts-wrap');
+    var date = new Date();
+    var currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    liveEdit.setAttribute("class", "live-edit");
+    const postHeading = $.createElement('h4');
+    postHeading.innerHTML = "All Posts";
+    postHeading.setAttribute("class", "post-header");
+    viewPostsWrap.prepend(postHeading);
+    const liveHeading = $.createElement('h4');
+    liveHeading.innerHTML = "Live Edit";
+    liveHeading.setAttribute("class", "live-header");
+    viewPostsWrap.prepend(liveEdit);
+    viewPostsWrap.prepend(liveHeading);
 
-    postName = $.getElementById('post_name').value;
-    postText = $.getElementById('post_text').value;
-    if (postName.length === 0) {
-      alert("Insert Post Title")
-      return 0;
-    } else if (postText.length === 0) {
-      alert("Insert Post Content")
-      return 0;
+    //Live Edit
+    if(liveEdit.innerHTML == 0){
+      liveEdit.innerHTML = `<h3 class="empty-value">Empty!</h3>`;
     }
-
-    newPost = `
-    <li>
+    postInsert.addEventListener('keyup', function(){
+      liveEdit.innerHTML = `
       <span>Published Date: ${currentDate}</span>
-      <h3>${postName}</h3>
-      <p>${postText}</p>
-    </li>
-    `;
+      <h3><span class="first-letter">${titleField.value.charAt(0)}</span>${titleField.value}</h3>
+      <p>${contentField.value}</p>
+      `;
+      if (titleField.value.length == 0){
+        $.querySelector('.first-letter').setAttribute("style", "display: none");
+      }
+    })
 
-    // import data
-    appView.insertAdjacentHTML('afterbegin', newPost);
+    //add post
+    $.querySelector('.add-post').addEventListener("click", function(e){
+      var newPost = `
+      <li>
+        <span>Published Date: ${currentDate}</span>
+        <h3><span class="first-letter">${titleField.value.charAt(0)}</span>${titleField.value}</h3>
+        <p>${contentField.value}</p>
+      </li>
+      `;
+      if (titleField.value && contentField.value) {
+        allPosts.insertAdjacentHTML('afterbegin', newPost)
+      } else{
+        alert("Missing data!");
+      }
 
-    //clear field
-    $.getElementById('post_name').value = '';
-    $.getElementById('post_text').value = '';
-  })
+      // clear field value
+      titleField.value = '';
+      contentField.value = '';
+      liveEdit.innerHTML = '';
+      if (liveEdit.innerHTML == 0) {
+        liveEdit.innerHTML = `<h3 class="empty-value">Empty!</h3>`;
+      }
+    })
 
-  //lIVE Edit
-  $.querySelector('.post-insert').addEventListener('keyup', function(){
+  }
+  liveEdit();
 
-    $.querySelector('.live-edit').innerHTML = `
-    <span>Published Date: ${currentDate}</span>
-    <h3>${$.getElementById('post_name').value}</h3>
-    <p>${$.getElementById('post_text').value}</p>
-    `;
-  });
-})()
+  //Post List
+  function postList(){
+    viewPosts.setAttribute("class", "view-posts-wrap")
+    allPosts.setAttribute("class", "all-posts")
+
+    app.appendChild(viewPosts);
+    viewPosts.appendChild(allPosts);
+  }
+
+  //Avater
+  // var avater = 
+})();

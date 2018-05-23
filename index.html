@@ -6,52 +6,76 @@
   <title>Document</title>
   <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
   <style>
+    #app{
+      max-width: 700px;
+      margin: 0 auto;
+      margin-top: 30px;
+    }
+    #app>div{
+      flex: 1;
+    }
+    .post-insert{
+      padding-right: 50px;
+    }
+    textarea{
+      height: 200px;
+    }
     .live-edit{
-      background: #333;
-      color: #fff;
+      background: #f3f3f3;
       padding: 20px;
+      min-height: 255px;
+      position: relative;
+    }
+    .empty-value{
+      opacity: .3;
+      text-transform: uppercase;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+    }
+    .post-header{
+      margin-top: 30px;
+    }
+    .newpost-header{
+      margin-bottom: 20px;
+    }
+    .all-posts{
+      padding: 20px 0;
+      list-style: none;
+      /* margin-top: 30px; */
+      border: 1px solid #c5c5c5;
+      background: #f9f9f9;
+    }
+    .all-posts:empty{
+      display: none;
+    }
+    .live-header{
+      margin-bottom: 20px;
+    }
+    ul.all-posts>li {
+      border-bottom: 1px solid #c5c5c5;
+      padding: 10px 20px;
+    }
+    ul.all-posts>li:last-child {
+      border-bottom: none;
+    }
+    .first-letter{
+      display: inline-block;
+      background: #000;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      border-radius: 30px;
+      color: #fff;
+      margin-right: 10px;
     }
   </style>
 </head>
 <body>
   
-  <div id="app"></div>
-  <div class="container mt-5">
-    <div class="row">
-      <div class="col-sm-4">
-        <h3>Add New Post</h3>
-        <div class="app">
-          <div class="post-insert">
-            <form>
-              <div class=" mb-3">
-                <input type="text" id="post_name" class="form-control" placeholder="Post Name">
-              </div>
-              <div class=" mb-3">
-                <textarea id="post_text" cols="30" rows="8" class="form-control" placeholder="Insert text"></textarea>
-              </div>
-              <!-- <div class=" mb-3">
-                  <button class="btn-sm btn btn-primary">BG Color</button>
-                  <button class="btn-sm btn btn-primary">Font family</button>
-                  <button class="btn-sm btn btn-primary">Font size</button>
-                </div> -->
-              <div>
-                <button class="btn btn-default add-post">Post Now</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-  
-      <div class="col-sm-5">
-        <h3>Live Edit</h3>
-        <div class="app-view">
-          <div class="live-edit">
-          </div>
-          <ul class="all-posts"></ul>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div id="app" class="d-flex"></div>
 
   <script src="./dist/bundle.js"></script>
 </body>
