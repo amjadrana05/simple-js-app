@@ -19,6 +19,7 @@ const $ = document;
 const app = $.getElementById("app");
 
 (function(){  
+  const postInsertWrap = $.createElement('div');
   const postInsert = $.createElement('div');
   const titleField = $.createElement('input');
   const contentField = $.createElement('textarea');
@@ -26,14 +27,11 @@ const app = $.getElementById("app");
   const viewPosts = $.createElement('div');
   const allPosts = $.createElement('ul');
 
-  // init post area
-  postArea();
-
-  // init all posts
-  postList();
   
   // Post Area
   function postArea(){
+    postInsertWrap.setAttribute('class', 'post-wrapper d-flex');
+    app.appendChild(postInsertWrap);
     const postHeading = $.createElement('h4');
     postHeading.innerHTML = "Insert New Post";
     postHeading.setAttribute("class", "newpost-header");
@@ -57,13 +55,17 @@ const app = $.getElementById("app");
       "class": "btn btn-default add-post"
     });
     postButton.innerHTML = "Post Now";
-    app.appendChild(postInsert);
+    postInsertWrap.appendChild(postInsert);
     appendChilds(postInsert, [
       titleField,
       contentField,
       postButton
     ]);
+    viewPosts.setAttribute("class", "view-posts-wrap")
+    postInsertWrap.appendChild(viewPosts);
   }
+  // init post area
+  postArea();
 
   //Live Edit Post
   function liveEdit(){
@@ -75,7 +77,9 @@ const app = $.getElementById("app");
     const postHeading = $.createElement('h4');
     postHeading.innerHTML = "All Posts";
     postHeading.setAttribute("class", "post-header");
-    viewPostsWrap.prepend(postHeading);
+    app.appendChild(postHeading);
+    allPosts.setAttribute("class", "all-posts")
+    app.appendChild(allPosts);
     const liveHeading = $.createElement('h4');
     liveHeading.innerHTML = "Live Edit";
     liveHeading.setAttribute("class", "live-header");
@@ -88,7 +92,7 @@ const app = $.getElementById("app");
     }
     postInsert.addEventListener('keyup', function(){
       liveEdit.innerHTML = `
-      <span>Published Date: ${currentDate}</span>
+      <p>Published Date: ${currentDate}</p>
       <h3><span class="first-letter">${titleField.value.charAt(0)}</span>${titleField.value}</h3>
       <p>${contentField.value}</p>
       `;
@@ -101,7 +105,7 @@ const app = $.getElementById("app");
     $.querySelector('.add-post').addEventListener("click", function(e){
       var newPost = `
       <li>
-        <span>Published Date: ${currentDate}</span>
+        <p>Published Date: ${currentDate}</p>
         <h3><span class="first-letter">${titleField.value.charAt(0)}</span>${titleField.value}</h3>
         <p>${contentField.value}</p>
       </li>
@@ -123,15 +127,6 @@ const app = $.getElementById("app");
 
   }
   liveEdit();
-
-  //Post List
-  function postList(){
-    viewPosts.setAttribute("class", "view-posts-wrap")
-    allPosts.setAttribute("class", "all-posts")
-
-    app.appendChild(viewPosts);
-    viewPosts.appendChild(allPosts);
-  }
 
   //Avater
   // var avater = 
