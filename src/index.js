@@ -195,7 +195,11 @@ const app = $.getElementById("app");
           <p>${cmtFieldText.value}</p>
         </li>
       `;
-      cmtList.insertAdjacentHTML('afterbegin', eachCmt)
+      if (cmtField.value && cmtFieldText.value) {
+        cmtList.insertAdjacentHTML('afterbegin', eachCmt)
+      } else {
+        alert("Missing data!");
+      }
       cmtField.value = '';
       cmtFieldText.value = '';
     })
