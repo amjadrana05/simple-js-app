@@ -76,6 +76,55 @@ ul.all-posts>li:last-child {
   color: #fff;
   margin-right: 10px;
 }
+.cmt-like-wrap{
+  display: flex;
+}
+.like-wrap {
+  margin-right: 20px;
+}
+.comment-wrap #comment_text {
+  height: 100px;
+}
+.like-counter{
+  display: inline-block;
+  background: #444;
+  padding: 1px 7px 5px 7px;
+  line-height: 1;
+  border-radius: 4px;
+  color: #fff;
+  margin-left: 10px;
+}
+.comment-wrap{
+  min-width: 400px;
+}
+.comment-wrap ul:empty{
+  display: none;
+}
+.comment-wrap ul{
+  background: #f3f3f3;
+  padding: 10px 0;
+  margin-top: 20px;
+  list-style: none;
+}
+.comment-wrap ul li{
+  border-bottom: 1px solid #dedede;
+  padding: 10px 20px;
+}
+.comment-wrap ul li:last-child {
+  border-bottom: none;
+}
+.comment-wrap ul li h4{
+  font-size: 18px;
+}
+.comment-wrap ul li .first-letter {
+  width: 25px;
+  height: 25px;
+  font-size: 18px;
+  line-height: 25px;
+}
+.comment-wrap ul li p{
+  margin: 0;
+}
 /*!
  * Bootstrap v4.1.1 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors

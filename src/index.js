@@ -40,7 +40,7 @@ const app = $.getElementById("app");
     
     setAttributes(titleField, {
       "type": "text",
-      "placeholder": "Post Title",
+      "placeholder": "User Name",
       "class": "form-control mb-3",
       "id": "post_name"
     });
@@ -67,8 +67,8 @@ const app = $.getElementById("app");
   // init post area
   postArea();
 
-  //Live Edit Post
-  function liveEdit(){
+  //Live Edit and post area
+  function insertPost(){
     const liveEdit = $.createElement('div');
     const viewPostsWrap = $.querySelector('.view-posts-wrap');
     var date = new Date();
@@ -104,7 +104,7 @@ const app = $.getElementById("app");
     //add post
     $.querySelector('.add-post').addEventListener("click", function(e){
       var newPost = `
-      <li>
+      <li class="each-post">
         <p>Published Date: ${currentDate}</p>
         <h3><span class="first-letter">${titleField.value.charAt(0)}</span>${titleField.value}</h3>
         <p>${contentField.value}</p>
@@ -123,10 +123,85 @@ const app = $.getElementById("app");
       if (liveEdit.innerHTML == 0) {
         liveEdit.innerHTML = `<h3 class="empty-value">Empty!</h3>`;
       }
+
+      //comment init
+      cmtLikeArea();
     })
 
   }
-  liveEdit();
+  insertPost();
+
+  //Comment & like area
+  function cmtLikeArea(){
+    var Counter = 0;
+    let eachPost = $.querySelector('.each-post');
+    const mainWrap = $.createElement('div');
+    mainWrap.setAttribute('class', 'cmt-like-wrap')
+    const like = $.createElement('div');
+    like.setAttribute('class', 'like-wrap')
+    const likeBtn = $.createElement('button');
+    const likeCounter = $.createElement('span');
+    likeCounter.setAttribute('class', 'like-counter')
+    likeCounter.innerHTML = Counter;
+    likeBtn.setAttribute('class', 'btn btn-default add-like')
+    likeBtn.innerHTML = "Like";
+    const cmt = $.createElement('div');
+    cmt.setAttribute('class', 'comment-wrap')
+    const cmtField = $.createElement('input');
+    const cmtFieldText = $.createElement('textarea');
+    const cmtBtn = $.createElement('button');
+    const cmtList = $.createElement('ul');
+    setAttributes(cmtField, {
+      "type": "text",
+      "placeholder": "Your Name",
+      "class": "form-control mb-2",
+      "id": "comment_user"
+    });
+    setAttributes(cmtFieldText, {
+      "type": "textarea",
+      "placeholder": "Enter Comment",
+      "class": "form-control mb-2",
+      "id": "comment_text"
+    });
+    setAttributes(cmtBtn, {
+      "type": "submit",
+      "class": "btn btn-default add-comment"
+    });
+    cmtBtn.innerHTML = "Comment";
+    appendChilds(cmt, [
+      cmtField,
+      cmtFieldText,
+      cmtBtn
+    ]);
+    like.appendChild(likeBtn);
+    likeBtn.appendChild(likeCounter);
+    mainWrap.appendChild(like);
+    mainWrap.appendChild(cmt);
+    cmt.append(cmtList);
+    eachPost.appendChild(mainWrap);
+    let result;
+    // like counter
+    likeBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      likeCounter.innerHTML = ++Counter;
+    })
+
+    // commenting
+    cmtBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      var eachCmt = `
+        <li>
+          <h4><span class="first-letter">${cmtField.value.charAt(0)}</span>${cmtField.value}</h4>
+          <p>${cmtFieldText.value}</p>
+        </li>
+      `;
+      cmtList.insertAdjacentHTML('afterbegin', eachCmt)
+      cmtField.value = '';
+      cmtFieldText.value = '';
+    })
+  }
+  
+
 
   //Avater
   // var avater = 
